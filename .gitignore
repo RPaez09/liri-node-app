@@ -5,6 +5,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Instructions for this assignment
+instructions.md
+
 # Runtime data
 pids
 *.pid
