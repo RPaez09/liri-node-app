@@ -4,6 +4,7 @@ const Twitter = require("twitter");
 const Spotify = require("node-spotify-api");
 const spotifyClient = new Spotify(keys.spotify);
 const twitterClient = new Twitter(keys.twitter);
+const omdb = require("./helpers/omdb-wrapper");
 
 liri = function ( command, argument ) {
     switch( command ) {
@@ -16,7 +17,8 @@ liri = function ( command, argument ) {
             spotifyThisSong( argument )
             break;
         case "movie-this":
-            console.log("Movies");
+            console.log("Searching for this movie...");
+            movieThis( argument );
             break;
         case "do-what-it-says":
             console.log("Doing what it says");
@@ -48,6 +50,16 @@ function spotifyThisSong( songName ) {
             var currentSong = data.tracks.items[i]; 
             console.log(`${i+1}: "${currentSong.artists[0].name}" - ${currentSong.name} , Preview: "${currentSong.preview_url}" Album: ${currentSong.album.name}`);
         }
+    });
+}
+
+function movieThis( movieName ){
+    if(movieName === ""){ 
+        movieName = "Mr. Nobody"
+    }
+    omdb( movieName , function( error , movie ){
+        if (error) throw error;
+        console.log(`${movie.Title} (${movie.Year}) : ${movie.Plot}`);
     });
 }
 
