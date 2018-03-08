@@ -59,7 +59,12 @@ function movieThis( movieName ){
     }
     omdb( movieName , function( error , movie ){
         if (error) throw error;
-        console.log(`${movie.Title} (${movie.Year}) : ${movie.Plot}`);
+        console.log(`${movie.Title} (${movie.Year}) : ${movie.Plot}
+IMDB Rating: ${movie.Ratings[0].Value}
+Rotten Tomatoes Rating: ${movie.Ratings[1].Value}
+Country: ${movie.Country}
+Language: ${movie.Language}
+Actors: ${movie.Actors}`);
     });
 }
 
