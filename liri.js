@@ -5,6 +5,7 @@ const Spotify = require("node-spotify-api");
 const spotifyClient = new Spotify(keys.spotify);
 const twitterClient = new Twitter(keys.twitter);
 const omdb = require("./helpers/omdb-wrapper");
+const fs = require("fs");
 
 liri = function ( command, argument ) {
     switch( command ) {
@@ -22,6 +23,7 @@ liri = function ( command, argument ) {
             break;
         case "do-what-it-says":
             console.log("Doing what it says");
+            doWhatItSays();
             break;
         default:
             console.log("Sorry, I didn't hear you.");
@@ -66,6 +68,17 @@ Country: ${movie.Country}
 Language: ${movie.Language}
 Actors: ${movie.Actors}`);
     });
+}
+
+function doWhatItSays(){
+    fs.readFile('random.txt','utf8', (err, data) => {
+        if (err) throw err;
+            // parse the data
+            let parsedData = data.split(",");
+            let command = parsedData[0];
+            let argument = parsedData.slice(1).join("");
+            liri(command , argument);
+        });
 }
 
 module.exports = liri;
